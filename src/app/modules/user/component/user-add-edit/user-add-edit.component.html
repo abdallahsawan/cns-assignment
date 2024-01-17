@@ -1,0 +1,79 @@
+<div mat-dialog-title>
+  <h1>{{data ? 'Edit': 'Add'}} User Form</h1>
+</div>
+<form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+  <div mat-dialog-content class="content">
+    <div class="row">
+      <mat-form-field appearance="outline">
+        <mat-label>Name:</mat-label>
+        <input matInput type="text" placeholder="i.e David" formControlName="name">
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Date of birth:</mat-label>
+        <input matInput [matDatepicker]="dateOfBirthPicker" formControlName="dateOfBirth">
+        <mat-hint>MM/DD/YYYY</mat-hint>
+        <mat-datepicker-toggle matIconSuffix [for]="dateOfBirthPicker"></mat-datepicker-toggle>
+        <mat-datepicker #dateOfBirthPicker></mat-datepicker>
+      </mat-form-field>
+    </div>
+    <div class="row">
+      <mat-form-field appearance="outline">
+        <mat-label>Email:</mat-label>
+        <input matInput type="email" placeholder="i.e david@gmail.com" formControlName="email">
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Mobile Number:</mat-label>
+        <input matInput placeholder="i.e +971-50-1234567" formControlName="mobileNumber">
+      </mat-form-field>
+    </div>
+    <div class="row">
+      <mat-form-field appearance="outline">
+        <mat-label>Nationality:</mat-label>
+        <mat-select formControlName="nationality" [disabled]="editMode">
+          <mat-option *ngFor="let val of nationalitiesList" [value]="val">{{val}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="row">
+      <mat-form-field appearance="outline">
+        <mat-label>Passport Number</mat-label>
+        <input matInput placeholder="i.e N123456" formControlName="passportNumber" >
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Passport Expiry Date:</mat-label>
+        <input matInput [matDatepicker]="passportExpiryDatePicker" formControlName="passportExpiryDate">
+        <mat-hint>MM/DD/YYYY</mat-hint>
+        <mat-datepicker-toggle matIconSuffix [for]="passportExpiryDatePicker"></mat-datepicker-toggle>
+        <mat-datepicker #passportExpiryDatePicker></mat-datepicker>
+      </mat-form-field>
+    </div>
+    <mat-grid-list cols="2" rowHeight="2:1">
+      <mat-grid-tile >
+        <mat-label style="padding-right: 20px">Passport Photo</mat-label>
+        <ng-container *ngIf="!uploadedPassportFile">
+          <button type="button" mat-stroked-button color="primary" (click)="passportFileUpload.click()">Upload</button>
+          <input  #passportFileUpload type='file' (change)="uploadPassportFile($event)" style="display:none"/>
+        </ng-container>
+        <ng-container *ngIf="uploadedPassportFile">
+          <button type="button" mat-stroked-button color="primary" (click)="openPassportFile()">View</button>
+        </ng-container>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <mat-label style="padding-right: 20px">User Photo</mat-label>
+        <ng-container *ngIf="!uploadedUserPhoto">
+          <button type="button" mat-stroked-button color="primary" (click)="userPhotoUpload.click()">Upload</button>
+          <input #userPhotoUpload type='file' (change)="uploadUserPhoto($event)" style="display:none"/>
+        </ng-container>
+        <ng-container *ngIf="uploadedUserPhoto">
+          <button type="button" mat-stroked-button color="primary" (click)="openUserPhoto()">View</button>
+        </ng-container>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </div>
+  <div mat-dialog-actions class="action-btns">
+    <button style="margin: 10px;" mat-raised-button color="accent" type="submit">{{data ? 'Update': 'Save'}}</button>
+    <button mat-raised-button type="button" color="warn" [mat-dialog-close]="false">Cancel</button>
+  </div>
+</form>
+
