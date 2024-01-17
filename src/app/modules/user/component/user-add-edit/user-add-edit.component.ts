@@ -36,7 +36,7 @@ export class UserAddEditComponent implements OnInit{
   initUserForm() {
     this.userForm = this.formBuilder.group({
       name: [{value: '', disabled: this.editMode}, Validators.required],
-      mobileNumber: ['', Validators.pattern(/^[0-9]{8,15}$/)],
+      mobileNumber: ['', Validators.pattern(/^[+]?[0-9]{8,15}$/)],
       email: ['', [Validators.required, Validators.email]],
       dateOfBirth: [{value: '', disabled: this.editMode}, Validators.required],
       nationality: [{value: '', disabled: this.editMode}, Validators.required],
